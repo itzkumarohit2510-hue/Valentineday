@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rohit ❤️ Mehak | Our Love Story Book</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#ffd1dc,#ff9eb5,#ffc3a0);
+color:#5a2a2a;
+overflow:hidden;
+}
+
+.page{
+display:none;
+min-height:100vh;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+text-align:center;
+padding:30px;
+animation:fadeIn 1.2s ease;
+}
+
+.active{display:flex}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(30px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+h1,h2{
+font-family:'Great Vibes',cursive;
+color:#b03060;
+}
+
+.book{
+background:#fff8f0;
+padding:25px;
+border-radius:20px;
+box-shadow:0 15px 40px rgba(0,0,0,0.2);
+max-width:700px;
+width:95%;
+animation:pageTurn 1s ease;
+}
+
+@keyframes pageTurn{
+from{transform:rotateY(15deg);opacity:0}
+to{transform:rotateY(0deg);opacity:1}
+}
+
+.storyText{
+font-family:'Playfair Display',serif;
+font-size:18px;
+line-height:1.8;
+margin-top:15px;
+}
+
+button{
+padding:12px 28px;
+background:#ff6f91;
+border:none;
+border-radius:30px;
+color:white;
+font-weight:600;
+cursor:pointer;
+margin-top:20px;
+transition:0.3s;
+}
+
+button:hover{transform:scale(1.07)}
+
+input{
+padding:12px;
+border-radius:30px;
+border:1px solid #ffc0cb;
+margin-top:15px;
+width:250px;
+}
+
+.coverImage{
+width:100%;
+max-width:350px;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,0.3);
+margin-top:20px;
+}
+
+.carousel{
+width:100%;
+max-width:350px;
+height:420px;
+position:relative;
+overflow:hidden;
+border-radius:20px;
+margin:20px auto;
+}
+
+.carousel img{
+width:100%;
+height:100%;
+object-fit:cover;
+position:absolute;
+opacity:0;
+transition:1.5s ease;
+}
+
+.carousel img.active{
+opacity:1;
+}
+
+.finalMessage{
+font-size:20px;
+line-height:1.8;
+color:#8b004f;
+}
+
+@media(max-width:480px){
+.storyText{font-size:16px}
+.carousel{height:360px}
+}
+</style>
+</head>
+
+<body>
+
+<audio id="bgMusic" loop preload="auto">
+<source src="Music.mp3" type="audio/mp3">
+</audio>
+
+<div class="page active" id="page1">
+<div class="book">
+<h1>Our Love Story</h1>
+<img src="us.jpg" class="coverImage">
+<p class="storyText">A beautiful story written by destiny... Rohit & Mehak ❤️</p>
+<input type="password" id="pass" placeholder="Enter Our Love Code">
+<button onclick="login()">Open Book</button>
+</div>
+</div>
+
+<div class="page" id="page2">
+<div class="book">
+<h2>Chapter 1 — The Beginning</h2>
+<p class="storyText" id="storyLine"></p>
+<button onclick="nextPage(3)">Turn Page ➜</button>
+</div>
+</div>
+
+<div class="page" id="page3">
+<div class="book">
+<h2>Chapter 2 — Our Memories</h2>
+
+<div class="carousel">
+<img src="e9e28a03-392f-4e11-a44b-c6925e6a353c.JPG" class="active">
+<img src="IMG_5162.JPG">
+<img src="IMG_5134.JPG">
+<img src="IMG_5162.JPG">
+<img src="IMG_5211.heic">
+<img src="IMG_6679.JPG">
+<img src="IMG_7670.jpg">
+<img src="IMG_8738.JPG">
+<img src="IMG_8946.jpg">
+<img src="upscalemedia-transformed.jpg">
+</div>
+
+<p class="storyText">Every memory became a page in the most beautiful book of my life.</p>
+
+<button onclick="nextPage(4)">Final Page ❤️</button>
+</div>
+</div>
+
+<div class="page" id="page4">
+<div class="book">
+<h2>Forever & Always</h2>
+<p class="finalMessage" id="loveText"></p>
+</div>
+</div>
+
+<script>
+function playMusic(){
+let music=document.getElementById("bgMusic");
+music.volume=0.7;
+music.play().catch(()=>{});
+}
+
+function login(){
+let pass=document.getElementById("pass").value;
+if(pass === "302518"){
+playMusic();
+nextPage(2);
+startStory();
+}
+else alert("Hint: Our Secret Numbers ❤️");
+}
+
+function nextPage(page){
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+document.getElementById("page"+page).classList.add("active");
+}
+
+function startStory(){
+let story="18 August 2023... KV2 Adampur Parking Stand... The day our story began. From that moment, love grew stronger with every smile, every conversation, and every memory we created together.";
+let i=0;
+let el=document.getElementById("storyLine");
+let interval=setInterval(()=>{
+el.textContent+=story[i];
+i++;
+if(i>=story.length) clearInterval(interval);
+},40);
+}
+
+let index=0;
+setInterval(()=>{
+let images=document.querySelectorAll(".carousel img");
+images[index].classList.remove("active");
+index=(index+1)%images.length;
+images[index].classList.add("active");
+},3500);
+
+setTimeout(()=>{
+document.getElementById("loveText").innerHTML=`
+I Love You Mehakkkkk ❤️ <br><br>
+Thank you for being the first & last and my best valentine of my life 💕 <br><br>
+Thank you for making me and my life this much beautiful and special 🌹`;
+},2000);
+</script>
+
+</body>
+</html>
